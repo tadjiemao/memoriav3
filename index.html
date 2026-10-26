@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Modos a elegir</title>
+<style>
+  :root { --bg:#16191e; --fg:#eceef1; color-scheme: dark; }
+  html { height:100%; }
+  body {
+    margin:0; min-height:100vh; min-height:100dvh;
+    padding:1.5rem 0; box-sizing:border-box;
+    background:var(--bg); color:var(--fg);
+    font-family: Georgia, "Times New Roman", serif;
+    display:flex; align-items:center; justify-content:center;
+    text-align:center;
+  }
+  .screen { display:flex; flex-direction:column; align-items:center; gap:2rem; padding:0 1.5rem; max-width:40rem; }
+  #screen-modes { display:none; }
+  p { font-size:1.25rem; line-height:1.7; margin:0; white-space: pre-line; text-align:justify; hyphens:auto; }
+  button {
+    font:inherit; font-size:1rem; letter-spacing:.12em;
+    color:var(--fg); background:transparent;
+    border:2px solid var(--fg); border-radius:0;
+    padding:.8rem 2.5rem; cursor:pointer;
+  }
+  button:hover, button:focus-visible { background:var(--fg); color:var(--bg); outline:none; }
+</style>
+</head>
+<body>
+
+<div class="screen" id="screen-intro">
+  <p id="para"></p>
+  <button id="accept" type="button">ACEPTAR Y CONTINUAR</button>
+</div>
+
+<div class="screen" id="screen-modes">
+  <button id="high" type="button">MODO A</button>
+  <button id="low" type="button">MODO B</button>
+</div>
+
+<script>
+  // ===== Configuración =====
+  const PARAGRAPH = "El objetivo de este estudio es <strong>comprobar si la frecuencia de uso de las palabras influye en el rendimiento de la memoria a corto plazo</strong>. Para ello, los participantes (usted) serán asignados a uno de los dos grupos de palabras de determinada condición y deberán <strong>memorizar las 15 palabras</strong> correspondientes. A continuación, realizarán una tarea cognitiva, después completarán una <strong>prueba de memoria</strong> y proporcionarán algunos datos personales.\n\nLos participantes de este estudio participan voluntariamente en el experimento <strong>de forma anónima. Solo recopilaremos los resultados de las pruebas, así como el sexo y la edad</strong>, con fines de análisis académico. <strong>Al hacer clic en el botón de abajo, usted acepta participar en el experimento</strong>. ¡Le agradecemos mucho su colaboración!";
+  const HIGH_PAGE = "alta.html"; // destino de MODO ALTA FRECUENCIA
+  const LOW_PAGE  = "baja.html"; // destino de MODO BAJA FRECUENCIA
+  // ==========================
+
+  document.getElementById("para").innerHTML = PARAGRAPH;
+
+  document.getElementById("accept").addEventListener("click", () => {
+    document.getElementById("screen-intro").style.display = "none";
+    const modes = document.getElementById("screen-modes");
+    modes.style.display = "flex";
+    document.getElementById("high").focus();
+  });
+  document.getElementById("high").addEventListener("click", () => { window.location.href = HIGH_PAGE; });
+  document.getElementById("low").addEventListener("click", () => { window.location.href = LOW_PAGE; });
+</script>
+</body>
+</html>

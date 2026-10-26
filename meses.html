@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Meses</title>
+<style>
+  :root { --bg:#16191e; --fg:#eceef1; color-scheme: dark; }
+  html { height:100%; }
+  body {
+    margin:0; min-height:100vh; min-height:100dvh;
+    padding:1.5rem 0 5rem; box-sizing:border-box;
+    background:var(--bg); color:var(--fg);
+    font-family: Georgia, "Times New Roman", serif;
+    display:flex; align-items:center; justify-content:center;
+    text-align:center;
+  }
+  .screen { display:flex; flex-direction:column; align-items:center; gap:2rem; padding:0 1.5rem; max-width:40rem; width:100%; box-sizing:border-box; }
+  p { font-size:1.25rem; line-height:1.7; margin:0; }
+  textarea {
+    font:inherit; font-size:1.1rem; line-height:1.6;
+    width:100%; min-height:9rem; resize:vertical; box-sizing:border-box;
+    color:var(--fg); background:transparent;
+    border:2px solid var(--fg); border-radius:0;
+    padding:.8rem 1rem; text-align:left;
+  }
+  textarea:focus { outline:none; background:rgba(236,238,241,.05); }
+  #timer {
+    position:fixed; left:0; right:0; bottom:0;
+    padding:1.5rem 0; text-align:center;
+    font-size:1rem; letter-spacing:.12em;
+  }
+</style>
+</head>
+<body>
+
+<div class="screen">
+  <p id="question"></p>
+  <textarea id="answer" autocomplete="off" autocapitalize="off" spellcheck="false" autofocus></textarea>
+</div>
+
+<div id="timer">Tiempo restante: 30s</div>
+
+<script>
+  // ===== Configuración =====
+  const QUESTION  = "Escriba <strong>en orden inverso los nombres de los doce meses</strong> en el recuadro de abajo: ";
+  const NEXT_PAGE = "https://docs.google.com/forms/d/e/1FAIpQLSfyerr-ppBaVM4AA1F9V-1k4h3ezgbipVsmnljNb7XN58TNMw/viewform?usp=publish-editor"; // destino al terminar la cuenta atrás
+  const SECONDS   = 30;
+  // ==========================
+
+  document.getElementById("question").innerHTML = QUESTION;
+
+  const timer = document.getElementById("timer");
+  const end = Date.now() + SECONDS * 1000;
+
+  function tick() {
+    const left = Math.max(0, Math.ceil((end - Date.now()) / 1000));
+    timer.textContent = "Tiempo restante: " + left + "s";
+    if (left <= 0) {
+      clearInterval(id);
+      window.location.href = NEXT_PAGE;
+    }
+  }
+  const id = setInterval(tick, 250);
+  tick();
+</script>
+</body>
+</html>

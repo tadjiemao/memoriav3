@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Palabras de baja frecuencia</title>
+<style>
+  :root { --bg:#16191e; --fg:#eceef1; color-scheme: dark; }
+  html, body { height:100%; margin:0; }
+  body {
+    background:var(--bg); color:var(--fg);
+    font-family: Georgia, "Times New Roman", serif;
+    display:flex; align-items:center; justify-content:center;
+    text-align:center;
+  }
+  #stage { padding:0 1.5rem; max-width:40rem; }
+  #display { font-size: clamp(3rem, 12vw, 6rem); line-height:1.2; }
+</style>
+</head>
+<body>
+<div id="stage">
+  <div id="display"></div>
+</div>
+
+<script>
+  // ===== Configuración =====
+  const WORDS = [
+    "TOQUE", "RUEGO", "BARRO", "SALTO", "CLAVE", "DANZA", "RIVAL", "LÁPIZ", "MANGA", "FURIA", "RABIA", "PILAR", "FIRMA", "VERBO", "PASTA"
+  ]; // 15 palabras
+  const WORD_MS = 500;                 // duración de cada palabra
+  const COUNT_MS = 1000;               // duración de cada número
+  const BLANK_MS = 1000;               // pantalla vacía tras la última palabra
+  const NEXT_PAGE = "meses.html";  // página local de destino
+  // ==========================
+
+  const display = document.getElementById("display");
+
+  const sequence = [
+    ...[3, 2, 1].map(n => ({ text: String(n), ms: COUNT_MS })),
+    ...WORDS.map(w => ({ text: w, ms: WORD_MS })),
+    { text: "", ms: BLANK_MS }
+  ];
+
+  function play(i) {
+    if (i >= sequence.length) {
+      window.location.href = NEXT_PAGE;
+      return;
+    }
+    display.textContent = sequence[i].text;
+    setTimeout(() => play(i + 1), sequence[i].ms);
+  }
+  play(0);
+</script>
+</body>
+</html>
